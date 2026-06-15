@@ -5,6 +5,7 @@ import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import * as net from 'net';
 
 // Entities
 import { User } from './entities/User.entity';
@@ -33,8 +34,8 @@ import * as bcrypt from 'bcrypt';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        const dbType = configService.get<string>('DB_TYPE');
+      useFactory: async (configService: ConfigService) => {
+        let dbType = configService.get<string>('DB_TYPE');
         const host = configService.get<string>('DB_HOST') || 'localhost';
         const port = parseInt(configService.get<string>('DB_PORT'), 10) || 5432;
         const username = configService.get<string>('DB_USERNAME') || 'postgres';
@@ -47,6 +48,32 @@ import * as bcrypt from 'bcrypt';
         console.log(`   - Username: ${username}`);
         console.log(`   - Database: ${database}`);
         console.log(`   - SSL:      ${useSsl}`);
+
+        if (dbType === 'postgres') {
+          // Perform a quick TCP reachability check (2s timeout) to prevent ETIMEDOUT crashes in sandbox environments
+          const isReachable = await new Promise<boolean>((resolve) => {
+            const socket = new net.Socket();
+            const timer = setTimeout(() => {
+              socket.destroy();
+              resolve(false);
+            }, 2000);
+            socket.connect(port, host, () => {
+              clearTimeout(timer);
+              socket.end();
+              resolve(true);
+            });
+            socket.on('error', () => {
+              clearTimeout(timer);
+              resolve(false);
+            });
+          });
+
+          if (!isReachable) {
+            console.warn(`\n⚠️  WARNING: Supabase host ${host}:${port} is unreachable (TCP Timeout).`);
+            console.warn(`👉 Automatically falling back to local SQLite database (sportman_sandbox.db) to prevent application crash.\n`);
+            dbType = 'sqlite';
+          }
+        }
 
         if (dbType === 'postgres') {
           return {
