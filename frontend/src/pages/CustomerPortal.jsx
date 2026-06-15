@@ -233,7 +233,7 @@ export default function CustomerPortal() {
             
             <div class="footer">
               Thank you for shopping with Sportman.ke!<br>
-              Queries? Email: Sportsman.ke001@gmail.com | Phone: +254 712 345678<br>
+              Queries? Email: Sportsman.ke001@gmail.com | Phone: +254 759 238018<br>
               <em>Genuine Gear. Rapid Nairobi Delivery.</em>
             </div>
           </div>
@@ -1854,7 +1854,30 @@ export default function CustomerPortal() {
               <h3 className="text-base md:text-lg font-black text-white mb-2 uppercase tracking-tight flex items-center gap-2">
                 💬 Sportman Help & Support
               </h3>
-              <p className="text-[10px] text-slate-400 mb-6">Encountered an issue with payments or shipping? Submit a support ticket to our Nairobi center.</p>
+              <p className="text-[10px] text-slate-400 mb-5">Encountered an issue with payments or shipping? Submit a support ticket to our Nairobi center.</p>
+
+              <div className="flex gap-3 mb-5">
+                <a
+                  href="https://wa.me/254759238018"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-green-600/10 text-center decoration-none no-underline"
+                >
+                  <span>💬 WhatsApp Chat</span>
+                </a>
+                <a
+                  href="tel:+254759238018"
+                  className="flex-1 py-2.5 bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 text-center decoration-none no-underline"
+                >
+                  <span>📞 Call Support</span>
+                </a>
+              </div>
+
+              <div className="relative flex py-1 items-center mb-3">
+                <div className="flex-grow border-t border-slate-800/60"></div>
+                <span className="flex-shrink mx-3 text-[8px] text-slate-500 font-bold uppercase tracking-wider">Or Submit A Ticket</span>
+                <div className="flex-grow border-t border-slate-800/60"></div>
+              </div>
 
               <form onSubmit={handleSupportSubmit} className="space-y-3">
                 <div className="grid grid-cols-2 gap-3">
@@ -1953,6 +1976,22 @@ export default function CustomerPortal() {
           </div>
         </div>
       )}
+
+      {/* FLOATING WHATSAPP CHAT WIDGET */}
+      <a
+        href="https://wa.me/254759238018"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-40 bg-green-600 hover:bg-green-500 text-white px-4 py-3 rounded-full shadow-2xl shadow-green-600/30 hover:shadow-green-500/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 group decoration-none no-underline"
+        title="Chat with us on WhatsApp"
+      >
+        <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.988 3.3 1.489 5.353 1.49 5.433-.003 9.85-4.425 9.853-9.863.002-2.634-1.02-5.11-2.884-6.974C17.062 1.94 14.59 1.92 12.003 1.92c-5.44 0-9.858 4.417-9.86 9.858-.001 2.078.547 3.795 1.587 5.49L2.732 21.2l3.915-1.046z" />
+        </svg>
+        <span className="text-xs font-black uppercase tracking-wider text-white">
+          WhatsApp Support
+        </span>
+      </a>
     </div>
   );
 }

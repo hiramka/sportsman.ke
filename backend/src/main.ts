@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // Serve static assets (such as uploaded product images)
-  app.useStaticAssets(join(__dirname, '..', '..', 'public'), {
+  app.useStaticAssets(join(__dirname, '..', 'public'), {
     prefix: '/public/',
   });
 
