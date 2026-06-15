@@ -450,7 +450,7 @@ export default function AdminPortal() {
             
             <div class="footer">
               Thank you for shopping with Sportman.ke!<br>
-              Queries? Email: support@sportman.ke | Phone: +254 712 345678<br>
+              Queries? Email: Sportsman.ke001@gmail.com | Phone: +254 712 345678<br>
               <em>Genuine Gear. Rapid Nairobi Delivery.</em>
             </div>
           </div>

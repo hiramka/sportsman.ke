@@ -233,7 +233,7 @@ export default function CustomerPortal() {
             
             <div class="footer">
               Thank you for shopping with Sportman.ke!<br>
-              Queries? Email: support@sportman.ke | Phone: +254 712 345678<br>
+              Queries? Email: Sportsman.ke001@gmail.com | Phone: +254 712 345678<br>
               <em>Genuine Gear. Rapid Nairobi Delivery.</em>
             </div>
           </div>
@@ -1823,7 +1823,7 @@ export default function CustomerPortal() {
 
               <section className="space-y-2">
                 <h4 className="font-bold text-white uppercase">4. Data Subject Rights</h4>
-                <p>Under the Kenya Data Protection Act, you maintain full rights to request access, correction, or permanent erasure of your order details from our system archives. You can initiate this request at any time by contacting our Nairobi support team at support@sportman.ke.</p>
+                <p>Under the Kenya Data Protection Act, you maintain full rights to request access, correction, or permanent erasure of your order details from our system archives. You can initiate this request at any time by contacting our Nairobi support team at Sportsman.ke001@gmail.com.</p>
               </section>
             </div>
 
