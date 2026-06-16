@@ -128,7 +128,7 @@ export default function AdminPortal() {
   // Calculate Dashboard Metrics
   const metrics = useMemo(() => {
     const paidOrders = orders.filter(o => o.status !== 'Pending Payment' && o.status !== 'Cancelled');
-    const totalSales = paidOrders.reduce((sum, o) => sum + o.totalAmount, 0);
+    const totalSales = paidOrders.reduce((sum, o) => sum + Number(o.totalAmount), 0);
     const lowStockCount = products.filter(p => p.stockQuantity <= p.reorderThreshold).length;
 
     return {
@@ -153,14 +153,6 @@ export default function AdminPortal() {
       });
     });
 
-    const defaults = {
-      'Football': 40,
-      'Jerseys': 30,
-      'Basketball': 15,
-      'Boots': 10,
-      'Table Tennis': 5
-    };
-
     const colors = {
       'Football': 'bg-cyan-500',
       'Jerseys': 'bg-orange-500',
@@ -170,11 +162,11 @@ export default function AdminPortal() {
     };
 
     if (totalQty === 0) {
-      return Object.entries(defaults).map(([name, pct]) => ({
-        name,
-        value: pct,
-        color: colors[name] || 'bg-slate-500'
-      }));
+      return [{
+        name: 'No Sales Yet',
+        value: 0,
+        color: 'bg-slate-500'
+      }];
     }
 
     return Object.entries(categoryTotals).map(([name, qty]) => ({
@@ -197,15 +189,9 @@ export default function AdminPortal() {
       const keyDate = d.toISOString().split('T')[0];
       const salesForDay = paidOrders
         .filter(o => o.date.startsWith(keyDate))
-        .reduce((sum, o) => sum + o.totalAmount, 0);
+        .reduce((sum, o) => sum + Number(o.totalAmount), 0);
         
       trend.push({ date: dateStr, amount: salesForDay });
-    }
-    
-    const hasSales = trend.some(t => t.amount > 0);
-    if (!hasSales) {
-      const mockAmounts = [12000, 18500, 14000, 29000, 22000, 35000, 45000];
-      return trend.map((t, idx) => ({ ...t, amount: mockAmounts[idx] }));
     }
     
     return trend;
