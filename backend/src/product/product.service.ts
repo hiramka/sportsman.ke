@@ -20,8 +20,14 @@ export class ProductService implements OnModuleDestroy {
 
   // Gracefully initialize Redis sandbox driver
   private initializeRedis() {
-    const host = process.env.REDIS_HOST || '127.0.0.1';
+    const host = process.env.REDIS_HOST;
     const port = parseInt(process.env.REDIS_PORT, 10) || 6379;
+
+    if (!host) {
+      console.log('⚡ Redis host not configured. Falling back to local high-speed memory cache.');
+      this.useRedis = false;
+      return;
+    }
 
     console.log(`🔌 Initializing Redis cache on redis://${host}:${port}...`);
     
