@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { MailService } from '../mail/mail.service';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -23,6 +24,10 @@ describe('AuthService', () => {
     sign: jest.fn(),
   };
 
+  const mockMailService = {
+    sendVerificationEmail: jest.fn().mockResolvedValue(true),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -34,6 +39,10 @@ describe('AuthService', () => {
         {
           provide: JwtService,
           useValue: mockJwtService,
+        },
+        {
+          provide: MailService,
+          useValue: mockMailService,
         },
       ],
     }).compile();
@@ -88,8 +97,9 @@ describe('AuthService', () => {
           role: 'customer', // Force 'customer' role
         })
       );
-      expect(result).toHaveProperty('token', 'jwt-token');
+      expect(result).toHaveProperty('message');
       expect(result.user.role).toBe('customer');
+      expect(mockMailService.sendVerificationEmail).toHaveBeenCalled();
     });
 
     it('should throw BadRequestException if user already exists', async () => {
@@ -121,6 +131,7 @@ describe('AuthService', () => {
         phone: '0712345678',
         passwordHash,
         role: 'customer',
+        isVerified: true,
       } as User;
 
       mockUserRepository.findOne.mockResolvedValue(mockUser);
@@ -157,6 +168,7 @@ describe('AuthService', () => {
         phone: '0712345678',
         passwordHash,
         role: 'customer',
+        isVerified: true,
       } as User;
 
       mockUserRepository.findOne.mockResolvedValue(mockUser);

@@ -335,7 +335,7 @@ export default function AdminPortal() {
     printWindow.document.write(`
       <html>
         <head>
-          <title>Receipt ${order.id} - Sportman.ke</title>
+          <title>Receipt ${order.id} - Sportsman.ke</title>
           <style>
             body { font-family: 'Outfit', sans-serif; padding: 40px; color: #1e293b; line-height: 1.6; background-color: #f8fafc; }
             .receipt-box { max-w: 600px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
@@ -364,7 +364,7 @@ export default function AdminPortal() {
         <body>
           <div class="receipt-box">
             <div class="header">
-              <div class="title">SPORTMAN<span>.KE</span></div>
+              <div class="title">SPORTSMAN<span>.KE</span></div>
               <div class="subtitle">Nairobi Premium Sports Hub</div>
             </div>
             
@@ -435,7 +435,7 @@ export default function AdminPortal() {
             ` : ''}
             
             <div class="footer">
-              Thank you for shopping with Sportman.ke!<br>
+              Thank you for shopping with Sportsman.ke!<br>
               Queries? Email: Sportsman.ke001@gmail.com | Phone: +254 759 238018<br>
               <em>Genuine Gear. Rapid Nairobi Delivery.</em>
             </div>
@@ -1196,7 +1196,7 @@ export default function AdminPortal() {
                       <input
                         type="text"
                         required
-                        placeholder="e.g. Sportman"
+                        placeholder="e.g. Sportsman"
                         value={productForm.brand}
                         onChange={(e) => setProductForm({ ...productForm, brand: e.target.value })}
                         className="w-full bg-slate-900 border border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl px-3 py-2 text-xs text-white"
@@ -1439,7 +1439,7 @@ export default function AdminPortal() {
                       <input
                         type="email"
                         required
-                        placeholder="e.g. john@sportman.ke"
+                        placeholder="e.g. john@sportsman.ke"
                         value={userForm.email}
                         onChange={(e) => setUserForm({ ...userForm, email: e.target.value })}
                         className="w-full bg-slate-900 border border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl px-3 py-2 text-xs text-white"

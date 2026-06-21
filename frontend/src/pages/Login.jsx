@@ -66,7 +66,7 @@ export default function Login() {
             <span className="text-2xl">🔥</span>
           </div>
           <h1 className="text-2xl md:text-3xl font-black tracking-tight text-white uppercase m-0 leading-none">
-            Sportman<span className="text-orange-500">.ke</span>
+            Sportsman<span className="text-orange-500">.ke</span>
           </h1>
           <p className="text-[10px] text-slate-400 tracking-wider uppercase font-semibold m-0 flex items-center gap-1">
             <Activity className="w-3.5 h-3.5 text-orange-500 animate-pulse" /> Corporate Secure Gateway
@@ -121,7 +121,7 @@ export default function Login() {
                 <input
                   type="email"
                   required
-                  placeholder="name@sportman.ke"
+                  placeholder="name@sportsman.ke"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full bg-slate-900 border border-slate-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 rounded-xl pl-10 pr-3 py-3 text-xs text-white placeholder-slate-700"

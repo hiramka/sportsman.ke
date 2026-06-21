@@ -4,7 +4,7 @@ import { describe, it, expect } from 'vitest';
 
 describe('Simple Test Suite', () => {
   it('should render a text element correctly', () => {
-    render(<div>Hello Sportman</div>);
-    expect(screen.getByText('Hello Sportman')).toBeInTheDocument();
+    render(<div>Hello Sportsman</div>);
+    expect(screen.getByText('Hello Sportsman')).toBeInTheDocument();
   });
 });

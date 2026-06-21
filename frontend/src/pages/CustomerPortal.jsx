@@ -132,7 +132,7 @@ export default function CustomerPortal() {
     printWindow.document.write(`
       <html>
         <head>
-          <title>Receipt ${order.id} - Sportman.ke</title>
+          <title>Receipt ${order.id} - Sportsman.ke</title>
           <style>
             body { font-family: 'Outfit', sans-serif; padding: 40px; color: #1e293b; line-height: 1.6; background-color: #f8fafc; }
             .receipt-box { max-w: 600px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
@@ -161,7 +161,7 @@ export default function CustomerPortal() {
         <body>
           <div class="receipt-box">
             <div class="header">
-              <div class="title">SPORTMAN<span>.KE</span></div>
+              <div class="title">SPORTSMAN<span>.KE</span></div>
               <div class="subtitle">Nairobi Premium Sports Hub</div>
             </div>
             
@@ -232,7 +232,7 @@ export default function CustomerPortal() {
             ` : ''}
             
             <div class="footer">
-              Thank you for shopping with Sportman.ke!<br>
+              Thank you for shopping with Sportsman.ke!<br>
               Queries? Email: Sportsman.ke001@gmail.com | Phone: +254 759 238018<br>
               <em>Genuine Gear. Rapid Nairobi Delivery.</em>
             </div>
@@ -536,7 +536,7 @@ export default function CustomerPortal() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
               <div>
                 <h2 className="text-xl md:text-2xl font-black text-white m-0 uppercase tracking-tight flex items-center gap-2">
-                  <ShoppingBag className="text-orange-500 w-5 h-5" /> Sportman Catalog
+                  <ShoppingBag className="text-orange-500 w-5 h-5" /> Sportsman Catalog
                 </h2>
                 <p className="text-xs text-slate-400 m-0">Showing {filteredProducts.length} high-performance sports items in Nairobi</p>
               </div>
@@ -1002,7 +1002,7 @@ export default function CustomerPortal() {
               <h2 className="text-xl md:text-2xl font-black text-white m-0 uppercase tracking-tight flex items-center gap-2">
                 <FileText className="text-orange-500 w-5.5 h-5.5 animate-pulse" /> My Official Receipts
               </h2>
-              <p className="text-xs text-slate-400 m-0 mt-1">Download and print official invoices for gear purchased at Sportman.ke</p>
+              <p className="text-xs text-slate-400 m-0 mt-1">Download and print official invoices for gear purchased at Sportsman.ke</p>
             </div>
             
             {/* Search filter */}
@@ -1177,7 +1177,7 @@ export default function CustomerPortal() {
       <footer className="bg-[#05070B] border-t border-slate-900/80 py-8 px-4 md:px-8 text-center text-slate-500 text-xs">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-1.5">
-            <span className="text-orange-500 font-bold text-sm">🔥 Sportman.ke</span>
+            <span className="text-orange-500 font-bold text-sm">🔥 Sportsman.ke</span>
             <span className="text-slate-700">|</span>
             <span>Nairobi’s #1 Sports Hub</span>
           </div>
@@ -1187,7 +1187,7 @@ export default function CustomerPortal() {
             <button onClick={() => setIsSupportOpen(true)} className="hover:text-slate-300 cursor-pointer font-bold bg-transparent border-none">Customer Support</button>
           </div>
           <div>
-            <span>&copy; {new Date().getFullYear()} Sportman.ke. All Rights Reserved.</span>
+            <span>&copy; {new Date().getFullYear()} Sportsman.ke. All Rights Reserved.</span>
           </div>
         </div>
       </footer>
@@ -1589,7 +1589,7 @@ export default function CustomerPortal() {
           <div className="max-w-md w-full bg-[#0D1321] border border-slate-800/80 rounded-3xl p-8 shadow-2xl relative overflow-hidden font-sans text-center space-y-6 animate-fade-in">
             {/* Header / Brand */}
             <div className="flex items-center justify-center gap-2 pb-4 border-b border-slate-900">
-              <span className="text-xl font-black text-white tracking-tight">SPORTMAN<span className="text-orange-500">.KE</span></span>
+              <span className="text-xl font-black text-white tracking-tight">SPORTSMAN<span className="text-orange-500">.KE</span></span>
               <span className="text-[10px] bg-green-500/10 border border-green-500/20 text-green-400 font-extrabold uppercase px-2 py-0.5 rounded-md">M-Pesa Live</span>
             </div>
 
@@ -1755,12 +1755,12 @@ export default function CustomerPortal() {
 
               <section className="space-y-2">
                 <h4 className="font-bold text-white uppercase">1. Overview & Agreement</h4>
-                <p>Welcome to Sportman.ke. These Terms of Service ("Terms") govern your access to and use of our sports gear platform, operating within Nairobi County, Kenya. By purchasing our products, accessing our storefront, or triggering payment mechanisms, you fully consent to be bound by these legal terms.</p>
+                <p>Welcome to Sportsman.ke. These Terms of Service ("Terms") govern your access to and use of our sports gear platform, operating within Nairobi County, Kenya. By purchasing our products, accessing our storefront, or triggering payment mechanisms, you fully consent to be bound by these legal terms.</p>
               </section>
 
               <section className="space-y-2">
                 <h4 className="font-bold text-white uppercase">2. Payments & M-Pesa Transactions</h4>
-                <p>All digital transactions executed on Sportman.ke are verified in partnership with Safaricom M-Pesa. By submitting an STK Push trigger, you authorize us to prompt your registered mobile number for a secure 4-digit PIN. In compliance with the Kenya Central Bank electronic transfer directives, we enforce a strict transaction limit in accordance with standard M-Pesa transaction limits. Any unauthorized or spoofed transactions will be blacklisted and logged with security regulators.</p>
+                <p>All digital transactions executed on Sportsman.ke are verified in partnership with Safaricom M-Pesa. By submitting an STK Push trigger, you authorize us to prompt your registered mobile number for a secure 4-digit PIN. In compliance with the Kenya Central Bank electronic transfer directives, we enforce a strict transaction limit in accordance with standard M-Pesa transaction limits. Any unauthorized or spoofed transactions will be blacklisted and logged with security regulators.</p>
               </section>
 
               <section className="space-y-2">
@@ -1854,7 +1854,7 @@ export default function CustomerPortal() {
 
             <div className="p-6 md:p-8">
               <h3 className="text-base md:text-lg font-black text-white mb-2 uppercase tracking-tight flex items-center gap-2">
-                💬 Sportman Help & Support
+                💬 Sportsman Help & Support
               </h3>
               <p className="text-[10px] text-slate-400 mb-5">Encountered an issue with payments or shipping? Submit a support ticket to our Nairobi center.</p>
 

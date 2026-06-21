@@ -26,7 +26,7 @@ export default function NotificationsCenter() {
                   <span className="text-[9px] text-[#6B7280] font-medium">Just now</span>
                 </div>
                 <div className="text-xs text-[#E5E7EB] leading-relaxed">
-                  <span className="font-bold text-green-400 mr-1.5">SPORTMAN.KE:</span>
+                  <span className="font-bold text-green-400 mr-1.5">SPORTSMAN.KE:</span>
                   {n.message}
                 </div>
               </div>
@@ -43,7 +43,7 @@ export default function NotificationsCenter() {
                   <span className="text-[9px] text-cyan-500/60 font-medium">Outbox</span>
                 </div>
                 <div className="text-xs text-[#E2E8F0] leading-relaxed font-light">
-                  <div className="font-bold text-cyan-400 mb-0.5">Subject: Sportman.ke Order Updates</div>
+                  <div className="font-bold text-cyan-400 mb-0.5">Subject: Sportsman.ke Order Updates</div>
                   <p className="text-[11px] text-slate-300 mt-1">{n.message}</p>
                 </div>
               </div>

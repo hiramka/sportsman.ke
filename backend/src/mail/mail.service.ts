@@ -41,16 +41,16 @@ export class MailService {
   async sendVerificationEmail(email: string, name: string, token: string): Promise<boolean> {
     const backendUrl = this.configService.get<string>('BACKEND_URL') || 'http://localhost:3000';
     const verificationLink = `${backendUrl}/api/auth/verify?token=${token}`;
-    const fromAddress = this.configService.get<string>('SMTP_FROM') || '"Sportman.ke" <noreply@sportman.ke>';
+    const fromAddress = this.configService.get<string>('SMTP_FROM') || '"Sportsman.ke" <noreply@sportsman.ke>';
 
-    // Beautiful premium dark theme HTML email matching Sportman.ke design
+    // Beautiful premium dark theme HTML email matching Sportsman.ke design
     const htmlContent = `
       <!DOCTYPE html>
       <html>
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Verify your Sportman.ke Account</title>
+          <title>Verify your Sportsman.ke Account</title>
           <style>
             body {
               margin: 0;
@@ -158,14 +158,14 @@ export class MailService {
             <table class="main-table">
               <tr>
                 <td class="header">
-                  <div class="logo">SPORTMAN<span style="color:#FFFFFF">.KE</span></div>
+                  <div class="logo">SPORTSMAN<span style="color:#FFFFFF">.KE</span></div>
                 </td>
               </tr>
               <tr>
                 <td class="content">
-                  <h1>Verify your Sportman.ke Account</h1>
+                  <h1>Verify your Sportsman.ke Account</h1>
                   <p>Hi ${name},</p>
-                  <p>Thank you for registering on Sportman.ke! To complete your registration and activate your account, please click the button below to verify your email address:</p>
+                  <p>Thank you for registering on Sportsman.ke! To complete your registration and activate your account, please click the button below to verify your email address:</p>
                   
                   <div class="button-container">
                     <a href="${verificationLink}" class="cta-button">Verify Email Address</a>
@@ -181,7 +181,7 @@ export class MailService {
               </tr>
               <tr>
                 <td class="footer">
-                  <p class="footer-text">&copy; 2026 Sportman.ke. All rights reserved.</p>
+                  <p class="footer-text">&copy; 2026 Sportsman.ke. All rights reserved.</p>
                   <p class="footer-text" style="margin-top: 5px;">Nairobi, Kenya</p>
                 </td>
               </tr>
@@ -196,7 +196,7 @@ export class MailService {
         await this.transporter.sendMail({
           from: fromAddress,
           to: email,
-          subject: 'Verify your Sportman.ke Account',
+          subject: 'Verify your Sportsman.ke Account',
           html: htmlContent,
         });
         this.logger.log(`Verification email successfully sent to: ${email}`);
@@ -217,7 +217,7 @@ export class MailService {
     this.logger.log(`
 =================== EMAIL VERIFICATION SIMULATOR ===================
 To: ${email}
-Subject: Verify your Sportman.ke Account
+Subject: Verify your Sportsman.ke Account
 
 Hi ${name},
 Thank you for registering. Please verify your email address by clicking:

@@ -42,7 +42,7 @@ import * as bcrypt from 'bcrypt';
         const host = configService.get<string>('DB_HOST') || 'localhost';
         const port = parseInt(configService.get<string>('DB_PORT'), 10) || 5432;
         const username = configService.get<string>('DB_USERNAME') || 'postgres';
-        const database = configService.get<string>('DB_DATABASE') || 'sportman';
+        const database = configService.get<string>('DB_DATABASE') || 'sportsman';
         const useSsl = configService.get<string>('DB_SSL') === 'true';
 
         let resolvedDbType = dbType;
@@ -68,7 +68,7 @@ import * as bcrypt from 'bcrypt';
 
           if (!isReachable) {
             console.warn(`\n⚠️  WARNING: Supabase host ${host}:${port} is unreachable (TCP Timeout).`);
-            console.warn(`👉 Automatically falling back to local SQLite database (sportman_sandbox.db) to prevent application crash.\n`);
+            console.warn(`👉 Automatically falling back to local SQLite database (sportsman_sandbox.db) to prevent application crash.\n`);
             resolvedDbType = 'sqlite';
           }
         }
@@ -108,7 +108,7 @@ import * as bcrypt from 'bcrypt';
         } else {
           return {
             type: 'sqlite',
-            database: 'sportman_sandbox.db',
+            database: 'sportsman_sandbox.db',
             entities: [User, Product, Order, OrderItem, Coupon],
             synchronize: !isProd, // Disable schema synchronize in production
             logging: false,
@@ -162,10 +162,10 @@ export class AppModule implements OnModuleInit {
 
     // 1. Seed Users (Admin, Warehouse, Delivery, Customer)
     const seedRoles = [
-      { role: 'admin', email: 'admin@sportman.ke', password: 'admin123', name: 'Admin User' },
-      { role: 'warehouse_staff', email: 'warehouse@sportman.ke', password: 'warehouse123', name: 'Warehouse Staff' },
-      { role: 'delivery_agent', email: 'delivery@sportman.ke', password: 'delivery123', name: 'Delivery Agent' },
-      { role: 'customer', email: 'customer@sportman.ke', password: 'customer123', name: 'Customer User' }
+      { role: 'admin', email: 'admin@sportsman.ke', password: 'admin123', name: 'Admin User' },
+      { role: 'warehouse_staff', email: 'warehouse@sportsman.ke', password: 'warehouse123', name: 'Warehouse Staff' },
+      { role: 'delivery_agent', email: 'delivery@sportsman.ke', password: 'delivery123', name: 'Delivery Agent' },
+      { role: 'customer', email: 'customer@sportsman.ke', password: 'customer123', name: 'Customer User' }
     ];
 
     for (const s of seedRoles) {
@@ -206,13 +206,13 @@ export class AppModule implements OnModuleInit {
     const defaultProducts = [
       {
         id: 'prod-1',
-        name: 'Sportman Pro Match Football',
+        name: 'Sportsman Pro Match Football',
         category: 'Football',
         description: 'FIFA-quality match football with superior aerodynamics and textured grip. Designed for all weather conditions in Nairobi stadiums.',
         price: 3500,
         stockQuantity: 25,
         reorderThreshold: 5,
-        brand: 'Sportman',
+        brand: 'Sportsman',
         imageUrl: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop&q=60',
         warehouseLocation: 'Aisle A - Row 1'
       },
@@ -224,7 +224,7 @@ export class AppModule implements OnModuleInit {
         price: 2500,
         stockQuantity: 15,
         reorderThreshold: 5,
-        brand: 'Sportman',
+        brand: 'Sportsman',
         imageUrl: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=500&auto=format&fit=crop&q=60',
         warehouseLocation: 'Aisle A - Row 3'
       },
@@ -248,7 +248,7 @@ export class AppModule implements OnModuleInit {
         price: 6800,
         stockQuantity: 4,
         reorderThreshold: 5,
-        brand: 'Sportman',
+        brand: 'Sportsman',
         imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop&q=60',
         warehouseLocation: 'Aisle C - Row 4'
       },
@@ -296,7 +296,7 @@ export class AppModule implements OnModuleInit {
         price: 950,
         stockQuantity: 5,
         reorderThreshold: 3,
-        brand: 'Sportman',
+        brand: 'Sportsman',
         imageUrl: 'https://images.unsplash.com/photo-1519766304817-4f37bda74a27?w=500&auto=format&fit=crop&q=60',
         warehouseLocation: 'Aisle B - Row 3'
       }

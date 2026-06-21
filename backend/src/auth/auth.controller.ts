@@ -39,7 +39,7 @@ export class AuthController {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Email Verified - Sportman.ke</title>
+          <title>Email Verified - Sportsman.ke</title>
           <style>
             body { font-family: 'Outfit', sans-serif; background-color: #080B11; color: white; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
             .card { background-color: #0D1321; border: 1px solid #1E293B; padding: 40px; border-radius: 24px; text-align: center; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }

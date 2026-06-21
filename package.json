@@ -1,8 +1,8 @@
 {
-  "name": "sportman-monorepo",
+  "name": "sportsman-monorepo",
   "version": "1.0.0",
   "private": true,
-  "description": "Sportman.ke Sports E-Commerce Full-Stack Monorepo",
+  "description": "Sportsman.ke Sports E-Commerce Full-Stack Monorepo",
   "scripts": {
     "install:all": "npm install --prefix frontend && npm install --prefix backend",
     "dev:frontend": "npm run dev --prefix frontend",

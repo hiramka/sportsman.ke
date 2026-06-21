@@ -118,7 +118,7 @@ export class MpesaService {
         PhoneNumber: formattedPhone,
         CallBackURL: callbackUrl,
         AccountReference: order.id,
-        TransactionDesc: `Sportman Order Payment ${order.id}`,
+        TransactionDesc: `Sportsman Order Payment ${order.id}`,
       };
 
       this.logger.log(`Initiating Safaricom STK Push for Order: ${order.id} to Phone: ${formattedPhone}`);

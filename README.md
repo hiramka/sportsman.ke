@@ -1,6 +1,6 @@
-# Sportman.ke Full-Stack Monorepo
+# Sportsman.ke Full-Stack Monorepo
 
-Sportman.ke is a sports e-commerce application built with a React (Vite) frontend and a NestJS (TypeORM) backend.
+Sportsman.ke is a sports e-commerce application built with a React (Vite) frontend and a NestJS (TypeORM) backend.
 
 ---
 
@@ -48,7 +48,7 @@ To deploy the NestJS API backend to [Render](https://render.com):
    * Log into your Render dashboard, click **New +** in the top-right corner, and select **Web Service**.
    * Connect your GitHub repository containing the monorepo code.
 2. **Configure the Web Service Settings**:
-   * **Name**: `sportman-backend`
+    * **Name**: `sportsman-backend`
    * **Runtime**: `Node`
    * **Branch**: `main` (or your default branch)
    * **Root Directory**: `backend` (⚠️ **Critical**: This instructs Render to navigate into the `backend` subfolder before installing, building, and running the service).
@@ -78,11 +78,11 @@ To deploy the NestJS API backend to [Render](https://render.com):
   SMTP_SECURE=false
   SMTP_USER=YOUR_EMAIL@gmail.com
   SMTP_PASS=YOUR_GMAIL_APP_PASSWORD
-  SMTP_FROM="Sportman.ke" <YOUR_EMAIL@gmail.com>
+  SMTP_FROM="Sportsman.ke" <YOUR_EMAIL@gmail.com>
 
   # Production Frontend Origins (Allows cross-domain communication)
   # Include your Vercel deployment domain here:
-  ALLOWED_ORIGINS=https://sportman-frontend.vercel.app,https://sportman.ke
+  ALLOWED_ORIGINS=https://sportsman-frontend.vercel.app,https://sportsman.ke
 
   # Safaricom Daraja M-Pesa Credentials
   MPESA_API_URL=https://api.safaricom.co.ke  # Safe live endpoint
@@ -128,5 +128,5 @@ To prevent this:
 - **Frontend**: React (Vite, TailwindCSS v4, React Router v7)
 - **Backend**: NestJS (TypeScript, TypeORM, Express)
 - **Database**:
-  - Local Sandbox: SQLite (`sportman_sandbox.db`)
+  - Local Sandbox: SQLite (`sportsman_sandbox.db`)
   - Production: PostgreSQL

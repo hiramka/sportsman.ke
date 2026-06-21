@@ -55,7 +55,7 @@ export default function Navbar() {
         </div>
         <div className="text-left">
           <h1 className="text-xl font-black tracking-tight text-white m-0 leading-none">
-            Sportman<span className="text-orange-500">.ke</span>
+            Sportsman<span className="text-orange-500">.ke</span>
           </h1>
           <p className="text-[9px] text-slate-400 tracking-wider uppercase font-semibold m-0 flex items-center gap-1 mt-1">
             <Activity className="w-3 h-3 text-orange-500 animate-pulse" /> Corporate Logistics Node

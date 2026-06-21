@@ -12,7 +12,7 @@ import { MailModule } from '../mail/mail.module';
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
       global: true, // Make JwtModule available everywhere
-      secret: process.env.JWT_SECRET || 'sportman_secret_key_2026',
+      secret: process.env.JWT_SECRET || 'sportsman_secret_key_2026',
       signOptions: { expiresIn: '7d' },
     }),
     MailModule,

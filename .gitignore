@@ -6,7 +6,7 @@ frontend/node_modules/
 # Local Databases (Sandbox SQLite)
 *.db
 *.db-journal
-backend/sportman_sandbox.db
+backend/sportsman_sandbox.db
 
 # Build Outputs
 dist/

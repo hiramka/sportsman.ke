@@ -221,7 +221,7 @@ export class OrderService {
       } else if (newStatus === 'Delivered') {
         sig = extraData.signature || 'Customer Signed';
         order.signature = sig;
-        msg = 'Package delivered successfully. Thank you for shopping with Sportman.ke!';
+        msg = 'Package delivered successfully. Thank you for shopping with Sportsman.ke!';
       } else if (newStatus === 'Cancelled') {
         const reason = extraData.reason || 'Requested by Customer';
         msg = `Order has been cancelled. Reason: ${reason}`;

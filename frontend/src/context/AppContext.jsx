@@ -6,13 +6,13 @@ export const AppContext = createContext();
 const DEFAULT_PRODUCTS = [
   {
     id: 'prod-1',
-    name: 'Sportman Pro Match Football',
+    name: 'Sportsman Pro Match Football',
     category: 'Football',
     description: 'FIFA-quality match football with superior aerodynamics and textured grip. Designed for all weather conditions in Nairobi stadiums.',
     price: 3500,
     stockQuantity: 25,
     reorderThreshold: 5,
-    brand: 'Sportman',
+    brand: 'Sportsman',
     imageUrl: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop&q=60',
     warehouseLocation: 'Aisle A - Row 1'
   },
@@ -24,7 +24,7 @@ const DEFAULT_PRODUCTS = [
     price: 2500,
     stockQuantity: 15,
     reorderThreshold: 5,
-    brand: 'Sportman',
+    brand: 'Sportsman',
     imageUrl: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=500&auto=format&fit=crop&q=60',
     warehouseLocation: 'Aisle A - Row 3'
   },
@@ -48,7 +48,7 @@ const DEFAULT_PRODUCTS = [
     price: 6800,
     stockQuantity: 4,
     reorderThreshold: 5,
-    brand: 'Sportman',
+    brand: 'Sportsman',
     imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop&q=60',
     warehouseLocation: 'Aisle C - Row 4'
   },
@@ -96,7 +96,7 @@ const DEFAULT_PRODUCTS = [
     price: 950,
     stockQuantity: 5,
     reorderThreshold: 3,
-    brand: 'Sportman',
+    brand: 'Sportsman',
     imageUrl: 'https://images.unsplash.com/photo-1519766304817-4f37bda74a27?w=500&auto=format&fit=crop&q=60',
     warehouseLocation: 'Aisle B - Row 3'
   }
@@ -416,7 +416,7 @@ export const AppProvider = ({ children }) => {
 
       // Trigger instant Email and SMS simulator notifications
       addNotification('email', `Order confirmation sent to ${customerInfo.email}. Ref: ${parsedOrder.id}`);
-      addNotification('sms', `Sportman: Order ${parsedOrder.id} received. total: KES ${parsedOrder.totalAmount.toLocaleString()}. Thank you!`);
+      addNotification('sms', `Sportsman: Order ${parsedOrder.id} received. total: KES ${parsedOrder.totalAmount.toLocaleString()}. Thank you!`);
 
       // Refetch catalog to sync locks & stock counts
       await fetchProducts();
@@ -456,7 +456,7 @@ export const AppProvider = ({ children }) => {
         prev.map(order => (order.id === orderId ? parsed : order))
       );
 
-      addNotification('sms', `M-Pesa ID ${mpesaRef} confirmed. KES ${parsed.totalAmount.toLocaleString()} paid to SPORTMAN.KE.`);
+      addNotification('sms', `M-Pesa ID ${mpesaRef} confirmed. KES ${parsed.totalAmount.toLocaleString()} paid to SPORTSMAN.KE.`);
       addNotification('success', `Payment verified successfully! Receipt Code: ${mpesaRef}`);
     } catch (err) {
       addNotification('error', err.message || 'M-Pesa payment sync failed.');
@@ -523,9 +523,9 @@ export const AppProvider = ({ children }) => {
 
       // Trigger standard alerts
       if (newStatus === 'Shipped') {
-        addNotification('sms', `Sportman: Order ${parsed.id} shipped via ${parsed.courierName}. Track with ${parsed.trackingNumber}`);
+        addNotification('sms', `Sportsman: Order ${parsed.id} shipped via ${parsed.courierName}. Track with ${parsed.trackingNumber}`);
       } else if (newStatus === 'Delivered') {
-        addNotification('sms', `Sportman: Order ${parsed.id} has been delivered successfully. Rate our service!`);
+        addNotification('sms', `Sportsman: Order ${parsed.id} has been delivered successfully. Rate our service!`);
       } else if (newStatus === 'Cancelled') {
         addNotification('email', `Cancellation notice for order ${parsed.id} sent to ${parsed.email}`);
         // Refresh catalogue stock levels

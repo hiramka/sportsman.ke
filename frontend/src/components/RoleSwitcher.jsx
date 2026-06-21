@@ -88,7 +88,7 @@ export default function RoleSwitcher() {
     e.preventDefault();
     setLoginError('');
     try {
-      const email = `${pendingRole.id}@sportman.ke`;
+      const email = `${pendingRole.id}@sportsman.ke`;
       const response = await fetch(`${API_BASE}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -134,7 +134,7 @@ export default function RoleSwitcher() {
           </div>
           <div>
             <h1 className="text-xl md:text-2xl font-black tracking-tight text-white m-0 flex items-center gap-1.5 leading-none">
-              Sportman<span className="text-orange-500">.ke</span>
+              Sportsman<span className="text-orange-500">.ke</span>
             </h1>
             <p className="text-[10px] text-slate-400 tracking-wider uppercase font-semibold m-0 flex items-center gap-1 mt-1">
               <Activity className="w-3 h-3 text-orange-500 animate-pulse" /> Corporate Logistics Node
@@ -214,7 +214,7 @@ export default function RoleSwitcher() {
                   <input
                     type="email"
                     disabled
-                    value={`${pendingRole.id}@sportman.ke`}
+                    value={`${pendingRole.id}@sportsman.ke`}
                     className="w-full bg-slate-950 border border-slate-900 rounded-xl px-3.5 py-2.5 text-xs text-slate-500 cursor-not-allowed font-medium"
                   />
                 </div>

@@ -29,8 +29,8 @@ async function bootstrap() {
 
   // Lock down CORS strictly to verified storefront domains in production
   const allowedOrigins = [
-    'https://sportman.ke',
-    'https://admin.sportman.ke'
+    'https://sportsman.ke',
+    'https://admin.sportsman.ke'
   ];
   if (process.env.ALLOWED_ORIGINS) {
     const envOrigins = process.env.ALLOWED_ORIGINS.split(',').map(item => item.trim());
@@ -70,6 +70,6 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3000;
   await app.listen(port);
-  console.log(`🚀 Sportman.ke Full-Stack Server active on: http://localhost:${port}/api`);
+  console.log(`🚀 Sportsman.ke Full-Stack Server active on: http://localhost:${port}/api`);
 }
 bootstrap();
