@@ -59,7 +59,7 @@ export class OrderService {
 
   // Transaction-backed order checkout with Pessimistic Row-Level Locking!
   async create(createDto: any) {
-    const { name, email, phone, address, subCounty, paymentMethod, cart, couponCode } = createDto;
+    const { userId, name, email, phone, address, subCounty, paymentMethod, cart, couponCode } = createDto;
 
     if (!cart || cart.length === 0) {
       throw new BadRequestException('Shopping cart cannot be empty.');
@@ -130,6 +130,7 @@ export class OrderService {
       // Build Order Entity
       const order = new Order();
       order.id = orderId;
+      order.userId = userId || null;
       order.customerName = name;
       order.email = email;
       order.phone = phone;
@@ -139,7 +140,7 @@ export class OrderService {
       order.discountAmount = discountAmount;
       order.totalAmount = totalAmount;
       order.couponApplied = couponAppliedText;
-      order.status = paymentMethod === 'M-Pesa' ? 'Pending Payment' : 'Paid';
+      order.status = (paymentMethod === 'M-Pesa' || paymentMethod === 'WhatsApp') ? 'Pending Payment' : 'Paid';
       order.paymentMethod = paymentMethod;
       order.date = new Date().toISOString();
       order.timelineJson = JSON.stringify(timeline);

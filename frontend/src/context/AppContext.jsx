@@ -108,7 +108,7 @@ const DEFAULT_COUPONS = [
   { id: 'c-3', code: 'NAIROBI10', discountPercentage: 10, description: '10% off local delivery' }
 ];
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:3000/api';
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
 export const AppProvider = ({ children }) => {
   const { user } = useAuth();
@@ -377,6 +377,7 @@ export const AppProvider = ({ children }) => {
   const createOrder = async (customerInfo, paymentMethod) => {
     try {
       const body = {
+        userId: user ? user.id : null,
         name: customerInfo.name,
         email: customerInfo.email,
         phone: customerInfo.phone,

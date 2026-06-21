@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Index, OneToMany } from 'typeorm';
+import { Order } from './Order.entity';
 
 @Entity('users')
 export class User {
@@ -20,4 +21,16 @@ export class User {
 
   @Column({ default: 'customer' })
   role: string;
+
+  @Column({ default: false })
+  isVerified: boolean;
+
+  @Column({ nullable: true })
+  verificationToken: string;
+
+  @Column({ nullable: true })
+  createdAt: string;
+
+  @OneToMany(() => Order, order => order.user)
+  orders: Order[];
 }

@@ -180,20 +180,20 @@ export default function AdminPortal() {
   const salesTrend = useMemo(() => {
     const trend = [];
     const paidOrders = orders.filter(o => o.status !== 'Pending Payment' && o.status !== 'Cancelled');
-    
+
     for (let i = 6; i >= 0; i--) {
       const d = new Date();
       d.setDate(d.getDate() - i);
       const dateStr = d.toLocaleDateString('en-KE', { month: 'short', day: 'numeric' });
-      
+
       const keyDate = d.toISOString().split('T')[0];
       const salesForDay = paidOrders
         .filter(o => o.date.startsWith(keyDate))
         .reduce((sum, o) => sum + Number(o.totalAmount), 0);
-        
+
       trend.push({ date: dateStr, amount: salesForDay });
     }
-    
+
     return trend;
   }, [orders]);
 
@@ -453,7 +453,7 @@ export default function AdminPortal() {
   return (
     <div className="flex-1 w-full bg-[#080B11] text-slate-100 p-4 md:p-8 flex flex-col items-center">
       <div className="max-w-6xl w-full space-y-8 animate-fade-in text-left">
-        
+
         {/* Admin Header with sub-tabs */}
         <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-900 gap-4">
           <div>
@@ -474,11 +474,10 @@ export default function AdminPortal() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${
-                  activeTab === tab.id
+                className={`px-4 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${activeTab === tab.id
                     ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30'
                     : 'bg-slate-900 border border-slate-850 text-slate-400 hover:text-slate-200'
-                }`}
+                  }`}
               >
                 {tab.name}
               </button>
@@ -565,8 +564,8 @@ export default function AdminPortal() {
                       <svg className="w-full h-44 overflow-visible" viewBox="0 0 460 150">
                         <defs>
                           <linearGradient id="salesGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.4"/>
-                            <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.0"/>
+                            <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.4" />
+                            <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.0" />
                           </linearGradient>
                         </defs>
 
@@ -799,13 +798,12 @@ export default function AdminPortal() {
                           <td className="p-4 text-slate-400 font-medium">{p.brand}</td>
                           <td className="p-4 text-right font-black text-white">KES {p.price.toLocaleString()}</td>
                           <td className="p-4 text-center">
-                            <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-                              p.stockQuantity === 0
+                            <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${p.stockQuantity === 0
                                 ? 'bg-red-500/10 text-red-400 border border-red-500/20'
                                 : isLowStock
-                                ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                                : 'bg-green-500/10 text-green-400 border border-green-500/20'
-                            }`}>
+                                  ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                                  : 'bg-green-500/10 text-green-400 border border-green-500/20'
+                              }`}>
                               {p.stockQuantity}
                             </span>
                           </td>
@@ -908,7 +906,7 @@ export default function AdminPortal() {
                                   Force Paid
                                 </button>
                               )}
-                              
+
                               {o.status === 'Paid' && (
                                 <button
                                   onClick={() => updateOrderStatus(o.id, 'Approved', {})}
@@ -917,7 +915,7 @@ export default function AdminPortal() {
                                   ✓ Approve & Release
                                 </button>
                               )}
-                              
+
                               {/* Standard Order Cancellation with inventory stock restoration! */}
                               {o.status !== 'Cancelled' && o.status !== 'Delivered' && (
                                 <button
@@ -941,7 +939,7 @@ export default function AdminPortal() {
                                   🖨️ Print Receipt
                                 </button>
                               )}
-                              
+
                               {o.status === 'Cancelled' && (
                                 <span className="text-[10px] text-red-500 font-bold">Stock Restored</span>
                               )}
@@ -1078,6 +1076,7 @@ export default function AdminPortal() {
                       <th className="p-4">Name</th>
                       <th className="p-4">Email</th>
                       <th className="p-4">Phone</th>
+                      <th className="p-4">Verification</th>
                       <th className="p-4">Role Badge</th>
                       <th className="p-4 text-center">Actions</th>
                     </tr>
@@ -1107,6 +1106,17 @@ export default function AdminPortal() {
                           <td className="p-4 text-slate-300 font-mono">{usr.email}</td>
                           <td className="p-4 text-slate-400">{usr.phone}</td>
                           <td className="p-4">
+                            {usr.isVerified ? (
+                              <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-tight">
+                                Verified
+                              </span>
+                            ) : (
+                              <span className="bg-red-500/10 text-red-400 border border-red-500/20 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-tight">
+                                Pending
+                              </span>
+                            )}
+                          </td>
+                          <td className="p-4">
                             <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase ${roleBadge}`}>
                               {usr.role}
                             </span>
@@ -1130,9 +1140,8 @@ export default function AdminPortal() {
                                   }
                                 }}
                                 disabled={isSelf}
-                                className={`p-1.5 transition-colors cursor-pointer ${
-                                  isSelf ? 'opacity-25 cursor-not-allowed text-slate-600' : 'hover:text-red-500 text-slate-400'
-                                }`}
+                                className={`p-1.5 transition-colors cursor-pointer ${isSelf ? 'opacity-25 cursor-not-allowed text-slate-600' : 'hover:text-red-500 text-slate-400'
+                                  }`}
                               >
                                 <Trash2 className="w-4 h-4" />
                               </button>
@@ -1314,7 +1323,7 @@ export default function AdminPortal() {
                           </div>
                         )}
                       </div>
-                      
+
                       {/* Image quick presets */}
                       <div className="mt-2.5 flex items-center gap-1">
                         <span className="text-[8px] text-slate-400 font-bold">Presets:</span>

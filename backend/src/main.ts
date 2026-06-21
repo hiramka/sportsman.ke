@@ -27,25 +27,41 @@ async function bootstrap() {
   // Set API Global prefix
   app.setGlobalPrefix('api');
 
-  // Lock down CORS to verified storefront domains and local development
+  // Lock down CORS strictly to verified storefront domains in production
   const allowedOrigins = [
-    'http://localhost:5173',
     'https://sportman.ke',
     'https://admin.sportman.ke'
   ];
+  if (process.env.ALLOWED_ORIGINS) {
+    const envOrigins = process.env.ALLOWED_ORIGINS.split(',').map(item => item.trim());
+    allowedOrigins.push(...envOrigins);
+  }
 
   app.enableCors({
     origin: (origin, callback) => {
       const isDev = process.env.NODE_ENV !== 'production';
-      if (
-        !origin || 
-        allowedOrigins.indexOf(origin) !== -1 ||
-        (isDev && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')))
-      ) {
-        callback(null, true);
+      if (isDev) {
+        // Development mode: Allow localhost and local private network ranges
+        if (
+          !origin ||
+          origin.startsWith('http://localhost:') ||
+          origin.startsWith('http://127.0.0.1:') ||
+          origin.startsWith('http://192.168.') ||
+          origin.startsWith('http://10.') ||
+          origin.startsWith('http://172.')
+        ) {
+          callback(null, true);
+        } else {
+          callback(new Error('Blocked by CORS policy (Dev Mode)'));
+        }
       } else {
-        console.warn(`🔒 CORS Blocked Origin: ${origin}`);
-        callback(new Error('Blocked by CORS policy'));
+        // Production mode: Strictly allow only registered domains (and same-origin/non-browser clients)
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          console.warn(`🔒 CORS Blocked Origin: ${origin}`);
+          callback(new Error('Blocked by CORS policy (Production Mode)'));
+        }
       }
     },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',

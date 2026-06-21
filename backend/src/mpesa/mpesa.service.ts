@@ -153,42 +153,9 @@ export class MpesaService {
       };
 
     } catch (error) {
-      const isProduction = this.configService.get<string>('NODE_ENV') === 'production';
-      if (isProduction) {
-        this.logger.error(`Safaricom Daraja API failed. Payment cannot proceed. Error: ${error.message}`);
-        throw new BadRequestException(`Payment initialization failed: ${error.message}`);
-      }
-
-      this.logger.warn(`Safaricom Daraja API failed or unconfigured. Activating Graceful Simulator Fallback. Reason: ${error.message}`);
-      
-      // Trigger Simulator Fallback
-      return this.simulateStkPushFallback(order, formattedPhone);
+      this.logger.error(`Safaricom Daraja API failed. Payment cannot proceed. Error: ${error.message}`);
+      throw new BadRequestException(`Payment initialization failed: ${error.message}`);
     }
-  }
-
-  // Graceful Local Simulator Fallback
-  private async simulateStkPushFallback(order: Order, formattedPhone: string): Promise<any> {
-    const mockCheckoutRequestId = 'ws_CO_Simulated_' + Math.random().toString(36).substring(2, 10);
-    order.mpesaCheckoutRequestId = mockCheckoutRequestId;
-    await this.orderRepository.save(order);
-
-    // Run asynchronous simulation callback in 5 seconds
-    setTimeout(async () => {
-      try {
-        const mockReceipt = 'MPESA' + Math.random().toString(36).substring(2, 8).toUpperCase();
-        this.logger.log(`[Simulator Callback] Simulating successful payment callback for CheckoutRequestID: ${mockCheckoutRequestId}`);
-        await this.orderService.updateStatus(order.id, 'Paid', { mpesaReference: mockReceipt });
-      } catch (err) {
-        this.logger.error(`[Simulator Callback] FAILED to update simulated order payment`, err.stack);
-      }
-    }, 5000);
-
-    return {
-      success: true,
-      message: 'SIMULATOR ACTIVE: Mock STK push triggered. Payment will auto-verify in 5 seconds.',
-      checkoutRequestId: mockCheckoutRequestId,
-      isSimulated: true,
-    };
   }
 
   // Handles payment notification from Safaricom callback URL

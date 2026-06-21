@@ -6,6 +6,7 @@ import { EntityManager } from 'typeorm';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import * as net from 'net';
+import { join } from 'path';
 
 // Entities
 import { User } from './entities/User.entity';
@@ -21,6 +22,7 @@ import { OrderModule } from './order/order.module';
 import { CouponModule } from './coupon/coupon.module';
 import { MpesaModule } from './mpesa/mpesa.module';
 import { SupabaseModule } from './supabase/supabase.module';
+import { MailModule } from './mail/mail.module';
 
 import * as bcrypt from 'bcrypt';
 
@@ -35,22 +37,18 @@ import * as bcrypt from 'bcrypt';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        let dbType = configService.get<string>('DB_TYPE');
+        const isProd = configService.get<string>('NODE_ENV') === 'production';
+        const dbType = configService.get<string>('DB_TYPE') || (isProd ? 'postgres' : 'sqlite');
         const host = configService.get<string>('DB_HOST') || 'localhost';
         const port = parseInt(configService.get<string>('DB_PORT'), 10) || 5432;
         const username = configService.get<string>('DB_USERNAME') || 'postgres';
         const database = configService.get<string>('DB_DATABASE') || 'sportman';
         const useSsl = configService.get<string>('DB_SSL') === 'true';
-        console.log(`🔌 Database connection configuration resolved:`);
-        console.log(`   - Type:     ${dbType}`);
-        console.log(`   - Host:     ${host}`);
-        console.log(`   - Port:     ${port}`);
-        console.log(`   - Username: ${username}`);
-        console.log(`   - Database: ${database}`);
-        console.log(`   - SSL:      ${useSsl}`);
 
-        if (dbType === 'postgres') {
-          // Perform a quick TCP reachability check (2s timeout) to prevent ETIMEDOUT crashes in sandbox environments
+        let resolvedDbType = dbType;
+
+        if (!isProd && dbType === 'postgres') {
+          // Perform a quick TCP reachability check (2s timeout) to prevent ETIMEDOUT crashes in local sandbox/offline environments
           const isReachable = await new Promise<boolean>((resolve) => {
             const socket = new net.Socket();
             const timer = setTimeout(() => {
@@ -71,11 +69,21 @@ import * as bcrypt from 'bcrypt';
           if (!isReachable) {
             console.warn(`\n⚠️  WARNING: Supabase host ${host}:${port} is unreachable (TCP Timeout).`);
             console.warn(`👉 Automatically falling back to local SQLite database (sportman_sandbox.db) to prevent application crash.\n`);
-            dbType = 'sqlite';
+            resolvedDbType = 'sqlite';
           }
         }
 
-        if (dbType === 'postgres') {
+        console.log(`🔌 Database connection configuration resolved:`);
+        console.log(`   - Type:     ${resolvedDbType}`);
+        if (resolvedDbType === 'postgres') {
+          console.log(`   - Host:     ${host}`);
+          console.log(`   - Port:     ${port}`);
+          console.log(`   - Username: ${username}`);
+          console.log(`   - Database: ${database}`);
+          console.log(`   - SSL:      ${useSsl}`);
+        }
+
+        if (resolvedDbType === 'postgres') {
           return {
             type: 'postgres',
             host,
@@ -84,9 +92,11 @@ import * as bcrypt from 'bcrypt';
             password: configService.get<string>('DB_PASSWORD') || 'postgres',
             database,
             entities: [User, Product, Order, OrderItem, Coupon],
-            synchronize: true,
+            synchronize: !isProd, // Disable schema synchronize in production
             logging: false,
             ssl: useSsl ? { rejectUnauthorized: false } : false,
+            migrationsRun: isProd, // Automatically run pending migrations on startup in production
+            migrations: [join(__dirname, 'migrations', '*{.ts,.js}')],
             extra: {
               max: 15,
               idleTimeoutMillis: 30000,
@@ -100,8 +110,10 @@ import * as bcrypt from 'bcrypt';
             type: 'sqlite',
             database: 'sportman_sandbox.db',
             entities: [User, Product, Order, OrderItem, Coupon],
-            synchronize: true,
+            synchronize: !isProd, // Disable schema synchronize in production
             logging: false,
+            migrationsRun: isProd,
+            migrations: [join(__dirname, 'migrations', '*{.ts,.js}')],
           };
         }
       },
@@ -112,6 +124,7 @@ import * as bcrypt from 'bcrypt';
     CouponModule,
     MpesaModule,
     SupabaseModule,
+    MailModule,
   ],
   providers: [
     {
@@ -165,6 +178,8 @@ export class AppModule implements OnModuleInit {
           phone: s.role === 'customer' ? '0712345678' : '0722000000',
           passwordHash,
           role: s.role,
+          isVerified: true,
+          createdAt: new Date().toISOString()
         });
         await this.entityManager.save(User, newUser);
         console.log(`✓ Seeded User: ${s.email} (Password: ${s.password})`);

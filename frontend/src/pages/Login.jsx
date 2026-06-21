@@ -13,17 +13,24 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccessMessage('');
     setLoading(true);
 
     try {
       if (isSignUp) {
-        const user = await signup(name.trim(), email.trim(), phone.trim(), password);
-        navigate('/');
+        const result = await signup(name.trim(), email.trim(), phone.trim(), password);
+        setSuccessMessage(result.message || 'Registration successful. Please verify your email before signing in.');
+        setIsSignUp(false);
+        setName('');
+        setPhone('');
+        setEmail('');
+        setPassword('');
       } else {
         const user = await login(email.trim(), password);
         // Redirect based on role
@@ -141,6 +148,12 @@ export default function Login() {
               <p className="text-[10px] font-bold text-red-500 m-0 animate-pulse">
                 ⚠️ {error}
               </p>
+            )}
+
+            {successMessage && (
+              <div className="bg-emerald-500/10 border border-emerald-500/20 p-3.5 rounded-xl text-emerald-400 text-[10.5px] font-bold leading-normal">
+                ✓ {successMessage}
+              </div>
             )}
 
             <button

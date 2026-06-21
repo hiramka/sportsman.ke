@@ -43,3 +43,8 @@ pnpm-debug.log*
 *.sw?
 CVS/
 Thumbs.db
+
+# Uploads & Temporary Local Scripts
+backend/public/uploads/
+delete_orders.js
+

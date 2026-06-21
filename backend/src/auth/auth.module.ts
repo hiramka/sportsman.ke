@@ -5,6 +5,7 @@ import { User } from '../entities/User.entity';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { AuthGuard } from './auth.guard';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AuthGuard } from './auth.guard';
       secret: process.env.JWT_SECRET || 'sportman_secret_key_2026',
       signOptions: { expiresIn: '7d' },
     }),
+    MailModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, AuthGuard],

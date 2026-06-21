@@ -1,10 +1,18 @@
-import { Entity, Column, PrimaryColumn, OneToMany, Index } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne, JoinColumn, Index } from 'typeorm';
 import { OrderItem } from './OrderItem.entity';
+import { User } from './User.entity';
 
 @Entity('orders')
 export class Order {
   @PrimaryColumn()
   id: string;
+
+  @Column({ nullable: true })
+  userId: string;
+
+  @ManyToOne(() => User, user => user.orders, { nullable: true, onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'userId' })
+  user: User;
 
   @Column()
   customerName: string;

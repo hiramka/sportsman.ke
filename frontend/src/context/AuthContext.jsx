@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext(null);
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:3000/api';
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -65,10 +65,8 @@ export const AuthProvider = ({ children }) => {
       throw new Error(errorData.message || 'Signup failed.');
     }
 
-    const data = await res.json(); // { token, user: { id, name, email, phone, role } }
-    setUser(data.user);
-    setIsAuthenticated(true);
-    return data.user;
+    const data = await res.json(); // { message, user: { id, name, email, phone, role } }
+    return data;
   };
 
   const logout = async () => {

@@ -86,7 +86,7 @@ export default function CustomerPortal() {
     address: '',
     subCounty: NAIROBI_SUB_COUNTIES[0]
   });
-  const [paymentMethod, setPaymentMethod] = useState('M-Pesa');
+  const [paymentMethod, setPaymentMethod] = useState('WhatsApp');
 
   // M-Pesa STK Push Simulator State
   const [showMpesaSimulator, setShowMpesaSimulator] = useState(false);
@@ -322,61 +322,43 @@ export default function CustomerPortal() {
       return;
     }
 
+    if (paymentMethod === 'M-Pesa') {
+      alert('M-Pesa payments are currently under development. Please use WhatsApp checkout.');
+      return;
+    }
+
     const order = await createOrder(customerInfo, paymentMethod);
     if (!order) return; // Cart stock error
 
     setIsCheckoutOpen(false);
 
-    if (paymentMethod === 'M-Pesa') {
-      // Trigger interactive Daraja simulator
-      setSimulatedOrder(order);
-      setMpesaPin('');
-      setMpesaSimState('push-send');
-      setShowMpesaSimulator(true);
+    if (paymentMethod === 'WhatsApp') {
+      // Clear cart locally
+      clearCart();
 
-      // Trigger the real backend Safaricom Daraja API STK Push
-      triggerMpesaPush(order.id, customerInfo.phone);
+      // Build structured text for WhatsApp ordering
+      let message = `New Order Request\n\n`;
+      message += `Customer:\n`;
+      message += `Name: ${customerInfo.name}\n`;
+      message += `Email: ${customerInfo.email}\n`;
+      message += `Phone: ${customerInfo.phone}\n\n`;
+      
+      message += `Products:\n`;
+      order.items.forEach((item, index) => {
+        message += `${index + 1}. ${item.product.name} - Qty: ${item.quantity} - KES ${item.product.price.toLocaleString()}\n`;
+      });
+      message += `\nTotal:\n`;
+      message += `KES ${order.totalAmount.toLocaleString()}\n\n`;
+      message += `Please process this order.`;
 
-      // Clear any pre-existing polling intervals
-      if (pollIntervalId) clearInterval(pollIntervalId);
+      // Redirect to Admin WhatsApp line
+      const whatsappNumber = '254759238018';
+      const url = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
 
-      // Poll backend order status every 2 seconds
-      const interval = setInterval(async () => {
-        try {
-          const res = await fetch(`${API_BASE}/orders/${order.id}?email=${encodeURIComponent(order.email)}`);
-          if (res.ok) {
-            const freshOrder = await res.json();
-            if (freshOrder.status === 'Paid') {
-              clearInterval(interval);
-              setPollIntervalId(null);
-              setMpesaSimState('success');
-
-              // Synchronize the AppContext orders state
-              await fetchOrders();
-
-              // Update local state details
-              const parsed = {
-                ...freshOrder,
-                timeline: JSON.parse(freshOrder.timelineJson || '[]'),
-                items: freshOrder.items.map(item => ({
-                  product: item.product,
-                  quantity: item.quantity
-                }))
-              };
-              setSimulatedOrder(parsed);
-            }
-          }
-        } catch (err) {
-          console.warn('Order payment polling error:', err);
-        }
-      }, 2000);
-
-      setPollIntervalId(interval);
-
-      // Transition simulated STK Push display to fallback pin entry in 3 seconds
-      setTimeout(() => {
-        setMpesaSimState(prev => prev === 'push-send' ? 'pin-entry' : prev);
-      }, 3000);
+      // Go to shipment/order tracker page
+      setActiveTrackingOrder(order.id);
+      navigate('/tracker');
     } else {
       // Standard Card / Bank transfer payments instantly paid
       setActiveTrackingOrder(order.id);
@@ -1543,38 +1525,58 @@ export default function CustomerPortal() {
                 {/* Payment Option Selector */}
                 <div>
                   <label className="text-[10px] font-black uppercase text-slate-400 block mb-1.5">Select Payment Method</label>
-                  <div className="grid grid-cols-3 gap-2.5">
-                    {['M-Pesa', 'Card', 'Bank Transfer'].map(method => (
+                  <div className="grid grid-cols-2 gap-2.5">
+                    {[
+                      { id: 'WhatsApp', label: 'WhatsApp Checkout', icon: '💬 ' },
+                      { id: 'M-Pesa', label: 'M-Pesa Pay', icon: '📲 ' }
+                    ].map(method => (
                       <button
                         type="button"
-                        key={method}
-                        onClick={() => setPaymentMethod(method)}
-                        className={`py-2 rounded-xl text-[10px] font-black tracking-tight border transition-all cursor-pointer ${paymentMethod === method
+                        key={method.id}
+                        onClick={() => setPaymentMethod(method.id)}
+                        className={`py-2.5 rounded-xl text-[10px] font-black tracking-tight border transition-all cursor-pointer ${paymentMethod === method.id
                             ? 'bg-orange-500/10 border-orange-500 text-orange-500'
                             : 'bg-slate-900 border-slate-850 text-slate-400 hover:text-slate-200'
                           }`}
                       >
-                        {method === 'M-Pesa' ? '📲 ' : method === 'Card' ? '💳 ' : '🏦 '}
-                        {method}
+                        {method.icon}
+                        {method.label}
                       </button>
                     ))}
                   </div>
                 </div>
 
-                {/* Submit button */}
-                <div className="pt-4 border-t border-slate-900 flex items-center justify-between gap-4">
-                  <div className="text-left">
-                    <span className="text-[9px] text-slate-500 block uppercase font-bold">Payable Total</span>
-                    <span className="text-sm font-black text-orange-500">KES {cartTotal.toLocaleString()}</span>
+                {paymentMethod === 'M-Pesa' ? (
+                  <div className="p-5 bg-slate-950/80 border border-slate-850 rounded-2xl space-y-3.5 text-center animate-fade-in">
+                    {/* Modern construction / building loading animation */}
+                    <div className="flex items-center justify-center space-x-2.5 py-1">
+                      <div className="w-2.5 h-2.5 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                      <div className="w-2.5 h-2.5 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                      <div className="w-2.5 h-2.5 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                    </div>
+                    <div className="space-y-1">
+                      <h4 className="text-[11px] font-black text-white uppercase tracking-wider">📲 M-Pesa Under Construction</h4>
+                      <p className="text-[10px] text-slate-400 leading-normal">
+                        M-Pesa payments are currently under development. Please use WhatsApp checkout.
+                      </p>
+                    </div>
                   </div>
-                  <button
-                    type="submit"
-                    className="flex-1 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-extrabold text-xs md:text-sm py-3 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25 transition-all duration-300 cursor-pointer"
-                  >
-                    <span>{paymentMethod === 'M-Pesa' ? 'Trigger M-Pesa STK Push' : 'Confirm Purchase'}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
+                ) : (
+                  /* Submit button for WhatsApp Checkout */
+                  <div className="pt-4 border-t border-slate-900 flex items-center justify-between gap-4">
+                    <div className="text-left">
+                      <span className="text-[9px] text-slate-500 block uppercase font-bold">Payable Total</span>
+                      <span className="text-sm font-black text-orange-500">KES {cartTotal.toLocaleString()}</span>
+                    </div>
+                    <button
+                      type="submit"
+                      className="flex-1 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-650 text-white font-extrabold text-xs md:text-sm py-3 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25 transition-all duration-300 transform active:scale-95 cursor-pointer"
+                    >
+                      <span>Checkout via WhatsApp</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
               </form>
             </div>
           </div>
